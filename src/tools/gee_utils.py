@@ -14,3 +14,6 @@ def get_pm25(lat: float, lon: float, start_date: str, end_date: str) -> float:
                  .reduceRegion(reducer=ee.Reducer.mean(),
                                geometry=point, scale=1000))
     return pm25_mean.getInfo()
+
+
+#def get_s2_img(lat: float, lon: float, start_date: str, end_date: str) -> float:
