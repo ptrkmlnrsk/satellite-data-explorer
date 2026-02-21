@@ -40,22 +40,22 @@ def get_image(coordinates: list[float],
 
 def get_metadata(image_id: str) -> dict[str, str]:
     img = ee.Image(image_id)
-    props = img.toDictionary().getInfo()
+    metadata = img.toDictionary().getInfo()
 
-    time_start = props.get('system:time_start')
     acquired_at = (
-        datetime.fromtimestamp(time_start/1000, tz=timezone.utc).isoformat()
-        if time_start else None
+        datetime.fromtimestamp(
+            metadata.get('GENERATION_TIME')/1000,tz=timezone.utc)
+        .isoformat()
     )
 
     return {
         "system_id": image_id,
         "acquired_at": acquired_at,
-        "cloud_pct": props.get("CLOUDY_PIXEL_PERCENTAGE"),
-        "mgrs_tile": props.get("MGRS_TILE"),
-        "product_id": props.get("PRODUCT_ID"),
-        "platform": props.get("SPACECRAFT_NAME"),
-        "processing_baseline": props.get("PROCESSING_BASELINE"),
+        "cloud_pct": metadata.get("CLOUDY_PIXEL_PERCENTAGE"),
+        "mgrs_tile": metadata.get("MGRS_TILE"),
+        "product_id": metadata.get("PRODUCT_ID"),
+        "platform": metadata.get("SPACECRAFT_NAME"),
+        "processing_baseline": metadata.get("PROCESSING_BASELINE"),
     }
 
 
