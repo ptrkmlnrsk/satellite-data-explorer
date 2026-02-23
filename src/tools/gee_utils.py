@@ -60,8 +60,6 @@ class S2Downloader:
     def get_metadata_from_col_id(image_system_id: str) -> dict[str, str]:
         """
         Get metadata from image system id
-        :param image_system_id: string
-        :return: dictionary
         """
         img = ee.Image(image_system_id)
         metadata = img.toDictionary().getInfo()
@@ -74,7 +72,7 @@ class S2Downloader:
             "image_id": image_system_id,
             "product_id": metadata.get("PRODUCT_ID"),
             "acquired_at": acquired_at,
-            "cloud_pct": metadata.get("CLOUDY_PIXEL_PERCENTAGE"),
+            "cloud_percent": metadata.get("CLOUDY_PIXEL_PERCENTAGE"),
             "mgrs_tile": metadata.get("MGRS_TILE"),
             "platform": metadata.get("SPACECRAFT_NAME"),
             "processing_baseline": metadata.get("PROCESSING_BASELINE"),
@@ -85,6 +83,10 @@ class S2Downloader:
     def export_geotiff(
         self, image_id: str, image_roi: ee.Geometry, product_id: str
     ) -> None:
+        """
+        Export ee.Image object to geotiff and save it locally
+        """
+
         image_to_download = ee.Image(image_id).select(self.cfg.bands).clip(image_roi)
 
         safe_id = product_id.replace("/", "_")
