@@ -1,12 +1,4 @@
-import ee
-import geemap
-import traceback
-from datetime import datetime, timezone
-from dataclasses import dataclass
-from pathlib import Path
-
-from tools.constants import DATA_DIR
-
+from ee import Geometry
 
 # def get_pm25(lat: float, lon: float, start_date: str, end_date: str) -> float:
 #    point = ee.Geometry.Point([lon, lat])
@@ -19,11 +11,11 @@ from tools.constants import DATA_DIR
 #    return pm25_mean.getInfo()
 
 
-def get_bounds_from_coordinates(buffer_m: int, roi_coordinates) -> ee.Geometry:
+def get_bounds_from_coordinates(
+    buffer_m: int, roi_coordinates: list[float]
+) -> Geometry:
     """
     This method creates circular buffer ROI of point that EE converts to bounding box.
     S2Downloader.build_roi deprecated
     """
-    return ee.Geometry.Point(roi_coordinates).buffer(buffer_m).bounds()
-
-
+    return Geometry.Point(roi_coordinates).buffer(buffer_m).bounds()
