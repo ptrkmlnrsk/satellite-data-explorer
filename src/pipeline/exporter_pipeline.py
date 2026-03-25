@@ -4,12 +4,13 @@ from geemap import ee_export_image
 
 from src.tools.constants import DATA_DIR
 
+
 class Exporter:
     def __init__(self, bands: list[str]):
         self.bands = bands
 
     def export_geotiff(
-            self, image_id: str, image_roi: Geometry, product_id: str
+        self, image_id: str, image_roi: Geometry, product_id: str
     ) -> None:
         # bands
         image_to_download = Image(image_id).select(self.bands).clip(image_roi)

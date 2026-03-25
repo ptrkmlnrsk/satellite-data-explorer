@@ -2,8 +2,8 @@ from src.authorization.auth import authenticate_google_api, initialize_earth_eng
 from src.tools.gee_utils import get_bounds_from_coordinates
 from pathlib import Path
 from src.config import SentinelConfig
-from src.tools.exporter import Exporter
-from src.tools.downloader import SentinelDownloader
+from src.pipeline.exporter_pipeline import Exporter
+from src.pipeline.downloader_pipeline import SentinelDownloader
 
 CURRENT_FILE = Path(__file__).resolve()  # pelna sciezka pliku w ktorym jestm
 PROJECT_ROOT = CURRENT_FILE.parents[2]
