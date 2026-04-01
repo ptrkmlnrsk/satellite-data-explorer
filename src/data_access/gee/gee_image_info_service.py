@@ -1,5 +1,5 @@
 from ee import ImageCollection, Filter
-from src.data_access.domain.query import QueryParameters
+from src.domain.query import QueryParameters
 
 
 class GEEImageInfoService:

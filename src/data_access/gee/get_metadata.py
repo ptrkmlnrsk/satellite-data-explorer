@@ -1,7 +1,7 @@
 from ee import Image
 from datetime import datetime, timezone
 
-from src.data_access.domain.metadata import ImageMetadata
+from src.domain.metadata import ImageMetadata
 
 
 def get_gee_metadata_of_image(image_system_id: str) -> ImageMetadata:

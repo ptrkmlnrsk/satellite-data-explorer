@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.data_access.domain.query import QueryParameters
+from src.domain.query import QueryParameters
 
 
 class ImagerySource(ABC):
