@@ -3,7 +3,7 @@ from ee import Geometry
 
 
 @dataclass
-class SelectedImageRequest:
+class GEEImageRequest:
     """An object to represent an Earth Engine image request"""
 
     image_id: str

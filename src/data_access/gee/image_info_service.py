@@ -11,7 +11,7 @@ class GEEImageInfoService:
     def __init__(self, query_params: QueryParameters):
         self.query_params = query_params
 
-    def get_image_id(self) -> None:
+    def get_image_id(self) -> str:
         """
         Get image system id
         within date range. Selected system id

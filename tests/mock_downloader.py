@@ -2,7 +2,7 @@ from src.authorization.auth import authenticate_google_api, initialize_earth_eng
 from src.tools.gee_utils import get_bounds_from_coordinates
 from pathlib import Path
 from src.config import SatelliteConfig
-from src.pipeline.exporter_pipeline import Exporter
+from src.pipeline.gee_pipeline import Exporter
 from src.pipeline.downloader_pipeline import SentinelDownloader
 
 CURRENT_FILE = Path(__file__).resolve()  # pelna sciezka pliku w ktorym jestm

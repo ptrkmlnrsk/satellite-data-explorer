@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.domain.query import QueryParameters
+from src.domain.metadata import ImageMetadata
 
 
 class ImagerySource(ABC):
@@ -10,9 +10,20 @@ class ImagerySource(ABC):
     """
 
     @abstractmethod
-    def search(self, query: QueryParameters):
+    def search(self) -> str:
         pass
 
     @abstractmethod
-    def fetch(self, item):
+    def get_metadata(self, image_id: str) -> ImageMetadata:
         pass
+
+    @abstractmethod
+    def download(self, image_request):  # raster?
+        pass
+
+    # TODO porownywarki
+    # @abstractmethod
+    # def compare(self): # com
+    # wyjście z search jest takie samo, niezaleznie od źródła danych
+    # aby umozliwić porównanie
+    #    pass

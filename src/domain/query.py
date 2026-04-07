@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from ee import Geometry
+from datetime import datetime
 
 
 @dataclass
@@ -19,10 +20,11 @@ class QueryParameters:
 
     """
 
+    dataset: str  # GEE albo Planetary Engine/AWS
     roi: Geometry
-    collection: str
-    start_date: str
-    end_date: str
+    collection: str  # TODO collection as str enum
+    start_date: datetime
+    end_date: datetime  # TODO datetime
     cloud_cover: float
-    bands: list[str]
+    bands: list[str]  # TODO bands enum
     # sensor: str
