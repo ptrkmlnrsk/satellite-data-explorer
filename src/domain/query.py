@@ -1,6 +1,7 @@
 from dataclasses import dataclass
-from ee import Geometry
 from datetime import datetime
+
+from ee import Geometry
 
 
 @dataclass
