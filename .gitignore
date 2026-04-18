@@ -230,6 +230,7 @@ todo.md
 # Folders
 /dump/
 /data/
+/notebooks/
 
 # auths
 *.pickle
