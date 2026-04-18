@@ -1,6 +1,7 @@
 from os import getenv
 from dotenv import load_dotenv
 from dataclasses import dataclass
+from ee import Geometry
 
 load_dotenv()
 
@@ -12,11 +13,22 @@ CLOUDY_PIXEL_PERCENTAGE: float = 30
 
 
 @dataclass
-class SentinelConfig:
+class SatelliteConfig:
     """
-    Defines image configuration parameters
+    Defines image configuration parameters.
+
+    User needs to define a collection as a string.
+    Available collections are available here:
+    https://developers.google.com/earth-engine/datasets
+    egz. COPERNICUS/S2_SR_HARMONIZED
+
+    Bands for specified satellite platform
+    are defined as a list of strings.
+
+    ROI might be a Point coordinates or Polygon in crs epsg:4326.
+
     """
 
     collection: str
     bands: list[str]
-    roi_coordinates: list[float]
+    roi: list[float] | Geometry
