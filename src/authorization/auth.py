@@ -39,4 +39,3 @@ def authenticate_google_api():
 
 def initialize_earth_engine(creds: Any) -> Any:
     ee.Initialize(credentials=creds)
-    print("Earth Engine initialized successfully!")

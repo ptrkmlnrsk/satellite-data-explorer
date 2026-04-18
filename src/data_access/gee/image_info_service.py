@@ -34,7 +34,10 @@ class GEEImageInfoService:
         collection = (
             ImageCollection(self.query_params.collection)
             .filterBounds(roi)
-            .filterDate(self.query_params.start_date, self.query_params.end_date)
+            .filterDate(
+                self.query_params.start_date.isoformat(),
+                self.query_params.end_date.isoformat(),
+            )
             .filter(
                 Filter.lte("CLOUDY_PIXEL_PERCENTAGE", self.query_params.cloud_cover)
             )

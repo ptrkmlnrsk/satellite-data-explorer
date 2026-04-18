@@ -1,4 +1,5 @@
 from src.data_access.base.source import ImagerySource
+from dataclasses import asdict
 
 
 class Orchestrator:
@@ -10,4 +11,6 @@ class Orchestrator:
 
     def run_process(self):
         image_id = self.source.search()
-        metadata = self.source.get_metadata(image_id)  # noqa F841
+        metadata = self.source.get_metadata(image_id)
+
+        return {"image_id": image_id, "metadata": asdict(metadata)}
