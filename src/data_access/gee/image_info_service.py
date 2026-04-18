@@ -1,5 +1,7 @@
-from ee import ImageCollection, Filter
+from ee import ImageCollection, Filter, Geometry
+
 from src.domain.query import QueryParameters
+from src.data_access.gee.utils.roi_generator import get_bounds_from_coordinates
 
 
 class GEEImageInfoService:
@@ -11,6 +13,14 @@ class GEEImageInfoService:
     def __init__(self, query_params: QueryParameters):
         self.query_params = query_params
 
+    def build_gee_roi(self) -> Geometry | None:
+        if self.query_params.coordinates is None:
+            return None
+        return get_bounds_from_coordinates(
+            roi_coordinates=self.query_params.coordinates,
+            buffer_m=self.query_params.buffer,
+        )
+
     def get_image_id(self) -> str:
         """
         Get image system id
@@ -19,10 +29,11 @@ class GEEImageInfoService:
         based on max cloud percentage.
         Sets GEE system id of image.
         """
+        roi = self.build_gee_roi()
 
         collection = (
             ImageCollection(self.query_params.collection)
-            .filterBounds(self.query_params.roi)
+            .filterBounds(roi)
             .filterDate(self.query_params.start_date, self.query_params.end_date)
             .filter(
                 Filter.lte("CLOUDY_PIXEL_PERCENTAGE", self.query_params.cloud_cover)

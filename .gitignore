@@ -237,3 +237,6 @@ src/client_secret.json
 
 # Scratches
 notebooks/*scratches.ipynb
+
+# Drawio schemas
+*.drawio

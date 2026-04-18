@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-
-from ee import Geometry
+from typing import Any
 
 
 @dataclass
@@ -22,10 +21,21 @@ class QueryParameters:
     """
 
     dataset: str  # GEE albo Planetary Engine/AWS
-    roi: Geometry
-    collection: str  # TODO collection as str enum
+    collection: str | Any  # TODO collection as str enum
     start_date: datetime
     end_date: datetime  # TODO datetime
+    coordinates: list[float]
     cloud_cover: float
     bands: list[str]  # TODO bands enum
+    buffer: int = 350
     # sensor: str
+
+    # @property
+    # def roi(self):
+    #    if self.roi is None:
+    #        return None
+    #    return get_bounds_from_coordinates(
+    #        roi_coordinates=self.coordinates,
+    #        buffer_m=self.buffer)
+
+    # TODO poczytać o property

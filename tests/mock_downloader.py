@@ -1,5 +1,5 @@
 from src.authorization.auth import authenticate_google_api, initialize_earth_engine
-from src.tools.gee_utils import get_bounds_from_coordinates
+from src.data_access.gee.utils.roi_generator import get_bounds_from_coordinates
 from pathlib import Path
 from src.config import SatelliteConfig
 from src.data_access.gee.gee_service import Exporter

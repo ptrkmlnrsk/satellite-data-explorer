@@ -1,5 +1,6 @@
 from ee import Geometry
 
+
 # def get_pm25(lat: float, lon: float, start_date: str, end_date: str) -> float:
 #    point = ee.Geometry.Point([lon, lat])
 #    pm25_collection = (ee.ImageCollection('MODIS/061/MCD19A2_GRANULES')
@@ -12,7 +13,7 @@ from ee import Geometry
 
 
 def get_bounds_from_coordinates(
-    buffer_m: int, roi_coordinates: list[float]
+    roi_coordinates: list[float], buffer_m: int
 ) -> Geometry:
     """
     This method creates circular buffer ROI of point that EE converts to bounding box.
