@@ -1,38 +1,22 @@
-from fastapi import FastAPI
-from contextlib import asynccontextmanager
-
-from src.authorization.auth import authenticate_google_api, initialize_earth_engine
 from src.data_access.gee.gee_service import GEEImageService
 from src.data_access.gee.orchestrator import Orchestrator
 from src.data_access.gee.image_downloader import GEEImageDownloader
 from src.data_access.gee.image_info_service import GEEImageInfoService
 from src.domain.query import QueryParameters
 from src.domain.enums.collections import Collections
-from src.api.schemas.run_request import RunRequest
+from src.api.schemas.run_request import Sentinel2Request
+
+from fastapi import APIRouter
+
+router = APIRouter()
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    credentials = authenticate_google_api()
-    initialize_earth_engine(credentials)
-
-    print("Earth Engine initialized successfully!")
-
-    yield
-
-    print("Shutting down...")
-
-
-app = FastAPI(lifespan=lifespan)
-
-
-@app.get("/")
-def healthcheck():
-    return {"status": "ok"}
-
-
-@app.post("/run")
-def run_pipeline(payload: RunRequest):
+# wszystko co poniżej to przerzucic do innego pliku
+# zrobic sobie router
+@router.post("/run")
+def run_pipeline(payload: Sentinel2Request):
+    print(payload)
+    print(payload.bands[0].is_10m)
     collection_enum = Collections(payload.collection)
 
     query_parameters = QueryParameters(
