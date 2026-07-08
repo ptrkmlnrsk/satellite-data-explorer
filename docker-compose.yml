@@ -1,0 +1,56 @@
+services:
+  spark-master:
+    image: spark:python3-java17
+    container_name: spark-master
+    command: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.master.Master"]
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    volumes:
+      - ./apps:/opt/spark-apps
+      - ./data:/opt/spark-data
+
+  spark-worker:
+    image: spark:python3-java17
+    command: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://spark-master:7077"]
+    depends_on:
+      - spark-master
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./apps:/opt/spark-apps
+      - ./data:/opt/spark-data
+
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./data:/data
+
+  satellite-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    working_dir: /src
+    ports:
+    - "8000:8000"
+    volumes:
+    - .:/src
+    # - .:/.venv
+    #- uv_cache:/root/.cache/uv
+    - ./secrets:/secrets:ro
+    - ./tokens:/tokens
+    environment:
+      MINIO_ENDPOINT: http://minio:9000
+      SPARK_MASTER_URL: spark://spark-master:7077
+      UV_PROJECT_ENVIRONMENT: /opt/venv
+      UV_LINK_MODE: copy
+    env_file:
+    - .env
+    depends_on:
+      - minio
+      - spark-master
+    command: uv run python main.py

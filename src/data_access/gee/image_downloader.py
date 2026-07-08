@@ -1,3 +1,5 @@
+import logging
+
 from ee import Image
 from traceback import print_exc
 from geemap import ee_export_image
@@ -5,6 +7,8 @@ from geemap import ee_export_image
 from src.tools.constants import DATA_DIR
 from src.domain.image_request import GEEImageRequest
 from src.api.schemas.polygon_model import GEEPolygon
+
+logger = logging.getLogger(__name__)
 
 
 class GEEImageDownloader:
@@ -18,7 +22,6 @@ class GEEImageDownloader:
         Downloads image based on provided image_id, list of bands and roi within
         SelectedImageRequest object.
         :param selected_image:
-        :param self:
         :param image_id:
         :param bands:
         :param roi:
@@ -42,7 +45,12 @@ class GEEImageDownloader:
         safe_id = selected_image.image_id.replace("/", "_")
         output_name = DATA_DIR / f"{safe_id}.tif"
 
-        print(f"Downloading image... {image_to_download}")
+        logger.info(
+            "Download image. image_id=%s output=%s bands=%s",
+            selected_image.image_id,
+            output_name,
+            selected_image.bands,
+        )
 
         try:
             ee_export_image(
@@ -56,4 +64,4 @@ class GEEImageDownloader:
         except Exception:
             print_exc()
 
-        print("Image has been successfully downloaded to ", DATA_DIR)
+        # print("Image has been successfully downloaded to ", DATA_DIR)
