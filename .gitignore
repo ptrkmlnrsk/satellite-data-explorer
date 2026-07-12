@@ -231,13 +231,24 @@ todo.md
 /dump/
 /data/
 /notebooks/
+/tokens/
 
 # auths
 *.pickle
-src/client_secret.json
+secrets
 
 # Scratches
 notebooks/*scratches.ipynb
 
 # Drawio schemas
 *.drawio
+
+# Docker stuff
+.devcontainer/
+.dockerignore
+
+# vscode
+.vscode/
+
+# txt
+*.txt
