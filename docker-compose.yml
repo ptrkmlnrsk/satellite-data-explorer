@@ -34,6 +34,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.app
+    env_file:
+    - .env.docker
     working_dir: /src
     ports:
     - "8000:8000"
@@ -48,8 +50,6 @@ services:
       SPARK_MASTER_URL: spark://spark-master:7077
       UV_PROJECT_ENVIRONMENT: /opt/venv
       UV_LINK_MODE: copy
-    env_file:
-    - .env
     depends_on:
       - minio
       - spark-master
