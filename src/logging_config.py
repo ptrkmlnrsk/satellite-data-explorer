@@ -10,6 +10,8 @@ def setup_logging(
         level=level,
         format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",  # define how log shows
         handlers=[  # where to send logs?
+            logging.FileHandler(filename="new_logs.log",
+                            encoding='utf-8'),
             logging.StreamHandler(sys.stdout)  # sys.stdout - standard output (console)
         ],
         force=True,  # overwrite configuration

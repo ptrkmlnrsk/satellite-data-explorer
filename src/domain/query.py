@@ -26,7 +26,7 @@ class QueryParameters:
     coordinates: tuple[float, float]
     # roi: list[list[tuple[float, float]]]
     cloud_cover: float
-    bands: list[str]
+    #bands: list[str]
     buffer: int = 350
 
     # @property

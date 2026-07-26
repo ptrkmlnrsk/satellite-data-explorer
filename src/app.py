@@ -1,6 +1,8 @@
 from fastapi import FastAPI
+import fastapi_swagger_dark as fsd
 from contextlib import asynccontextmanager
 import logging
+from fastapi import APIRouter
 
 from src.authorization.auth import authenticate_google_api, initialize_earth_engine
 from src.api.pipelines import router as pipeline_router
@@ -25,10 +27,13 @@ async def lifespan(app: FastAPI):
     logger.info("Shutting down.")
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(lifespan=lifespan, docs_url=None)
 
+docs_router = APIRouter() # routery to miejsca w ktorych są endpointy
+fsd.install(router=docs_router)
+
+app.include_router(docs_router)
 app.include_router(pipeline_router)
-
 
 @app.get("/")
 def healthcheck():

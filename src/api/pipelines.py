@@ -1,5 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 import logging
+import os
+from pathlib import Path
+from typing import Annotated
 
 from src.data_access.gee.image_downloader import GEEImageDownloader
 from src.data_access.gee.image_info_service import GEEImageInfoService
@@ -10,12 +13,31 @@ from src.domain.enums.collections import Collections
 from src.domain.image_request import GEEImageRequest
 from src.api.schemas.run_request import Sentinel2Request
 
-router = APIRouter()
-logger = logging.getLogger(__name__)
+#src_dir = Path('src')
+#os.chdir(src_dir)
 
+router = APIRouter()
+
+logger = logging.getLogger(__name__)
+# logger = logging.FileHandler(filename="logs.log",
+#                             encoding='utf-8',
+#
+# 
+#
+class Database:
+    def get_users(self):
+        ...
+
+def get_db():
+    return Database()
+
+Connection = Annotated[Database, Depends(get_db)]
 
 @router.post("/search")
-def search_image(request: Sentinel2Request):
+def search_image(request: Sentinel2Request, db: Connection):
+
+    users = db.get_users()
+
     logger.info("Search image requested")
     # Pydantic model -> co zwraca endpoint
     collection_enum = Collections(request.collection)
@@ -29,7 +51,6 @@ def search_image(request: Sentinel2Request):
         start_date=request.start_date,
         end_date=request.end_date,
         cloud_cover=request.cloud_cover,
-        bands=request.bands,
     )
     gee_image_info_service = GEEImageInfoService(query_parameters)
     image_id = gee_image_info_service.get_image_id()

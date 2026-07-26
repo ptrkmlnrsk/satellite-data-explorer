@@ -14,14 +14,14 @@ class Sentinel2Request(BaseModel):
     start_date: date | None = None
     end_date: date | None = None
     cloud_cover: int | None = None
-    bands: list[str]
+    #bands: list[str]
     # roi: list[list[tuple[float, float]]] | None = None
 
     # zanim sie stworzy obiekt tej klasy to zostanie wywolany ten walidator
-    @field_validator("bands", mode="before")
-    def parse_bands(
-        cls, bands
-    ):  # to jakie pole podam w walidatorze to jego wartosc bedzie pod bands
-        return [Sentinel2Band.from_any(b) for b in bands]
-
+    #@field_validator("bands", mode="before")
+    #def parse_bands(
+    #    cls, bands
+    #):  # to jakie pole podam w walidatorze to jego wartosc bedzie pod bands
+    #    return [Sentinel2Band.from_any(b) for b in bands]
+#
     # TODO do wypierdolenia te bands z tego requestu

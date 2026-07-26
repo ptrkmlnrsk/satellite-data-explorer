@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 from src.domain.enums.sentinel2_bands import Sentinel2Band
 
+BANDS_RENAMEED = {}
 
 class GEEImageRequest(BaseModel):
     """

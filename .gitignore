@@ -234,10 +234,12 @@ todo.md
 /data/
 /notebooks/
 /tokens/
+/secrets/
 
 # auths
 *.pickle
 secrets
+client_secret.json
 
 # Scratches
 notebooks/*scratches.ipynb
